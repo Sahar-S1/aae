@@ -3,28 +3,28 @@
 export type Actor = any;
 
 // Action defines change of Actor over time
-// Alpha is progress rate between 0 and 1
-export type Action<A extends Actor = Actor> = (actor: A, alpha: number) => A;
+// Progress is progress rate between 0 and 1
+export type Action<A extends Actor = Actor> = (actor: A, progress: number) => A;
 
-// Alpha modifier to play same Action in different ways
-export type Easing = (alpha: number) => number;
+// Progress modifier to play same Action in different ways
+export type Easing = (progress: number) => number;
 
-// Act is Action played by an Actor for some duration
-export type Act<A extends Actor = Actor> = {
+// Scene is Action played by an Actor for some duration
+export type Scene<A extends Actor = Actor> = {
   actor: A;
   action: Action<A>;
   easing?: Easing;
   duration: number;
 };
 
-// Scene is sequence of Acts performed by Actors
-export class Scene {
+// Act is sequence of Scenes performed by Actors
+export class Act {
   actors: Actor[];
-  acts: Act[];
+  scenes: Scene[];
 
   constructor() {
     this.actors = [];
-    this.acts = [];
+    this.scenes = [];
   }
 
   add(actor: Actor): void {
@@ -35,7 +35,21 @@ export class Scene {
     this.actors.filter((thisActor) => thisActor != actor);
   }
 
-  play<A extends Actor>(act: Act<A>): void {
-    this.acts.push(act);
+  play<A extends Actor>(act: Scene<A>): void {
+    this.scenes.push(act);
   }
 }
+
+// Script will contain user code
+export interface Script {
+  playwrite(): void;
+}
+
+// Stage is a canvas which will connect with some renderer to render actors
+export abstract class Stage {
+  abstract render(): void;
+}
+
+// Director will play all the scenes of an act
+// By generating progress values for actions based on duration and framerates
+export class Director {}

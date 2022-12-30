@@ -1,4 +1,4 @@
-import { Action, Scene } from "./aae";
+import { Action, Act } from "./aae";
 
 // Library
 type Circle = {
@@ -17,16 +17,16 @@ const MoveCircle =
   });
 
 // Main
-const scene: Scene = new Scene();
+const act: Act = new Act();
 
 const c: Circle = {
   x: 0,
   y: 0,
   r: 10,
 };
-scene.add(c);
+act.add(c);
 
-scene.play({
+act.play({
   actor: c,
   action: MoveCircle({ x: 10 }),
   duration: 1,

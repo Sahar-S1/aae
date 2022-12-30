@@ -1,0 +1,9 @@
+Actor(Visuals) - Any object having set of properties describing it. For eg. Circle, Rectangle, Audio, CSS elements, etc.
+Action(Effects) - Operation which changes properties of an actor overtime. For eg. move, scale, rotate, etc.
+Progress(Alpha) - Percentage of action complete(0 to 1).
+Easing(Rate function) - Dictates how progress of an action changes. It allows us to play same action in different ways.
+Scene - An action performed on an actor for some time duration and easing.
+Act - Collection of actors and scenes 
+Script(int main()) - Tells how thw animation is supposed to be performed. 
+Stage(Canvas) - Information of how actors are supposed to render(Adapters). 
+Director(engine) - Performs some job. For eg. fetching alpha, frame rate, renders stage logic.

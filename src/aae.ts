@@ -1,18 +1,30 @@
-export interface Actor {
-  render(): void;
-}
+// Actor is just any object
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type Actor = any;
 
-export interface Action {
-  interpolate(alpha: number): void;
-}
+// Action defines change of Actor over time
+// Alpha is progress rate between 0 and 1
+export type Action<A extends Actor = Actor> = (actor: A, alpha: number) => A;
 
-export type Ratefn = (alpha: number) => number;
+// Alpha modifier to play same Action in different ways
+export type Easing = (alpha: number) => number;
 
-export class Stage {
+// Act is Action played by an Actor for some duration
+export type Act<A extends Actor = Actor> = {
+  actor: A;
+  action: Action<A>;
+  easing?: Easing;
+  duration: number;
+};
+
+// Scene is sequence of Acts performed by Actors
+export class Scene {
   actors: Actor[];
+  acts: Act[];
 
   constructor() {
     this.actors = [];
+    this.acts = [];
   }
 
   add(actor: Actor): void {
@@ -23,6 +35,7 @@ export class Stage {
     this.actors.filter((thisActor) => thisActor != actor);
   }
 
-  // eslint-disable-next-line
-  play(_action: Action, _runtime: number, _ratefn: Ratefn = (t) => t): void {}
+  play<A extends Actor>(act: Act<A>): void {
+    this.acts.push(act);
+  }
 }

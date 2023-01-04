@@ -35,8 +35,8 @@ export class Act {
     this.actors.filter((thisActor) => thisActor != actor);
   }
 
-  play<A extends Actor>(act: Scene<A>): void {
-    this.scenes.push(act);
+  play<A extends Actor>(scene: Scene<A>): void {
+    this.scenes.push(scene);
   }
 }
 
